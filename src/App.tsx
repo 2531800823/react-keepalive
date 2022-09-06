@@ -1,34 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+import React from "react";
+import ReactDOM from "react-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Routes as Switch,
+} from "react-router-dom";
+import Home from "./components/Home";
+import UserList from "./components/UserList";
+import UserAdd from "./components/UserAdd";
+import { KeepAliveProvider, withKeepAlive } from "./lib";
+let KeepAliveHome = withKeepAlive(Home, { cacheId: "Home" });
+let KeepAliveUserList = withKeepAlive(UserList, {
+  cacheId: "UserList",
+  scroll: true,
+});
+let KeepAliveUserAdd = withKeepAlive(UserAdd, { cacheId: "UserAdd" });
+const App = () => {
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
-
-export default App
+    <Router>
+      <KeepAliveProvider>
+        <ul>
+          <li>
+            <Link to="/">首页</Link>
+          </li>
+          <li>
+            <Link to="/list">用户列表</Link>
+          </li>
+          <li>
+            <Link to="/add">添加用户</Link>
+          </li>
+        </ul>
+        <Switch>
+          <Route path={"/"} element={<KeepAliveHome />} exact />
+          <Route path={"/list"} element={<KeepAliveUserList />} />
+          <Route path={"/add"} element={<KeepAliveUserAdd />} />
+        </Switch>
+      </KeepAliveProvider>
+    </Router>
+  );
+};
+export default App;
