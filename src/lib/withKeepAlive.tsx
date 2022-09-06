@@ -14,7 +14,6 @@ const withKeepAlive = (
 
     const { state, dispatch, scrollCache } = useContext(keepaliveContent);
     const divRef = useRef<HTMLDivElement>(null);
-    console.log(2);
 
     useEffect(() => {
       if (scroll) {

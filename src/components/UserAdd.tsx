@@ -9,7 +9,6 @@ const UserAdd: FC = () => {
       <hr />
       <button
         onClick={() => {
-          console.log(1);
           setNumber((number) => number + 1);
         }}
       >
